@@ -16,6 +16,8 @@ resource "cloudflare_zone" "main" {
 
 resource "cloudflare_zone_dns_settings" "main" {
   zone_id = cloudflare_zone.main.id
+  foundation_dns = false
+  ns_ttl = 86400
 }
 
 resource "cloudflare_dns_record" "records" {
@@ -27,9 +29,4 @@ resource "cloudflare_dns_record" "records" {
   content = each.value.content
   ttl     = try(each.value.ttl, 1)
   proxied = try(each.value.proxied, true)
-}
-
-import {
-  id = "bfae39879d315652a674aac0955e1712"
-  to = cloudflare_zone.main
 }
