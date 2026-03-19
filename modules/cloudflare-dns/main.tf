@@ -30,11 +30,10 @@ resource "cloudflare_zone_dns_settings" "main" {
   nameservers = {
     type = "cloudflare.standard"
   }
-  multi_provider     = false
-  flatten_all_cnames = false
-  internal_dns = {
-    reference_zone_id = cloudflare_zone.main.id
-  }
+  secondary_overrides = false
+  multi_provider      = false
+  flatten_all_cnames  = false
+  internal_dns        = {}
 }
 
 resource "cloudflare_dns_record" "records" {
