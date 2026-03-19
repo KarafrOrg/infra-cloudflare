@@ -1,6 +1,8 @@
 variable "account_id" {
   description = "Cloudflare account ID"
   type        = string
+  ephemeral   = true
+  sensitive   = true
 }
 
 variable "name_suffix" {
@@ -19,6 +21,6 @@ variable "tunnels" {
     service  = string
     hostname = string
     secret   = string
-  }
+    }
   ))
 }
