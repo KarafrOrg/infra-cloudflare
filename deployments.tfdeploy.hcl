@@ -104,7 +104,7 @@ deployment "production" {
     waf_rate_limits = {
       "global" = {
         threshold   = 1000
-        period      = 60
+        period      = 10
         expression = "(starts_with(http.request.uri.path, \"api\")) or (cf.waf.credential_check.password_leaked)"
         timeout = 60
         description = "Global rate limit for API endpoints and leaked credentials"
