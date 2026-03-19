@@ -11,12 +11,12 @@ required_providers {
 # Main Cloudflare provider
 provider "cloudflare" "main" {
   config {
-    api_token = var.cloudflare_api_token
+    api_key = var.cloudflare_api_key
   }
 }
 
 # Required variable for API token
-variable "cloudflare_api_token" {
+variable "cloudflare_api_key" {
   type        = string
   description = "Cloudflare API token for authentication"
   sensitive   = true

@@ -1,7 +1,6 @@
 deployment "production" {
   inputs = {
     # Authentication - These should be set via environment variables or TFC variables
-    cloudflare_api_token  = "" # Set via TFC_VAR_cloudflare_api_token
     cloudflare_api_key    = "" # Set via TFC_VAR_cloudflare_api_key
     cloudflare_email      = "" # Set via TFC_VAR_cloudflare_email
     cloudflare_account_id = "your-cloudflare-account-id"
@@ -44,7 +43,6 @@ deployment "production" {
 deployment "fat" {
   inputs = {
     # Authentication - These should be set via environment variables or TFC variables
-    cloudflare_api_token  = "" # Set via TFC_VAR_cloudflare_api_token
     cloudflare_api_key    = "" # Set via TFC_VAR_cloudflare_api_key
     cloudflare_email      = "" # Set via TFC_VAR_cloudflare_email
     cloudflare_account_id = "your-cloudflare-account-id"
@@ -79,7 +77,6 @@ deployment "fat" {
 deployment "uat" {
   inputs = {
     # Authentication - These should be set via environment variables or TFC variables
-    cloudflare_api_token  = "" # Set via TFC_VAR_cloudflare_api_token
     cloudflare_api_key    = "" # Set via TFC_VAR_cloudflare_api_key
     cloudflare_email      = "" # Set via TFC_VAR_cloudflare_email
     cloudflare_account_id = "your-cloudflare-account-id"
