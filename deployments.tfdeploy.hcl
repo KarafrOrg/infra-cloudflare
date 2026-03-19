@@ -109,7 +109,7 @@ deployment "production" {
         timeout = 60
         description = "Global rate limit for API endpoints and leaked credentials"
         disabled    = false
-        characteristics = ["ip.src"]
+        characteristics = ["ip.src", "cf.colo.id"]
       }
     }
     waf_firewall_rules = {}
