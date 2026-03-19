@@ -101,7 +101,16 @@ deployment "production" {
       }
     ]
 
-    waf_rate_limits = {}
+    waf_rate_limits = {
+      "global" = {
+        threshold   = 1000
+        period      = 60
+        expression = "(true)"
+        timeout = 60
+        description = "Global rate limiting for all requests"
+        disabled    = false
+      }
+    }
     waf_firewall_rules = {}
 
     tunnels = {}
