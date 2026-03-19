@@ -44,9 +44,10 @@ resource "cloudflare_ruleset" "rate_limits" {
       description = rule.description
       enabled     = !try(rule.disabled, false)
       ratelimit = {
-        characteristics = try(rule.characteristics, ["ip.src"])
-        period          = rule.period
+        characteristics     = try(rule.characteristics, ["ip.src"])
+        period              = rule.period
         requests_per_period = rule.threshold
+        mitigation_timeout = try(rule.timeout, 0)
       }
     }
   ]
@@ -64,10 +65,10 @@ resource "cloudflare_ruleset" "firewall_rules" {
 
   rules = [
     for key, rule in var.firewall_rules : {
-      action      = rule.action
-      expression  = rule.expression
-      description = rule.description
-      enabled     = !try(rule.paused, false)
+      action             = rule.action
+      expression         = rule.expression
+      description        = rule.description
+      enabled            = !try(rule.paused, false)
     }
   ]
 }
