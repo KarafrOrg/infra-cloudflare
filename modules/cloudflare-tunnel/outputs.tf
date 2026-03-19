@@ -11,5 +11,5 @@ output "tunnel_tokens" {
 
 output "tunnel_cnames" {
   description = "Map of tunnel CNAME records"
-  value       = { for k, v in cloudflare_dns_record.tunnel_records : k => v.hostname }
+  value       = { for k, v in cloudflare_dns_record.tunnel_records : k => v.content }
 }

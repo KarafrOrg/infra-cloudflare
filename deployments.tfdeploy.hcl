@@ -105,8 +105,8 @@ deployment "production" {
       "global" = {
         threshold   = 1000
         period      = 10
-        expression = "(starts_with(http.request.uri.path, \"api\")) or (cf.waf.credential_check.password_leaked)"
-        timeout = 10
+        expression  = "(starts_with(http.request.uri.path, \"api\")) or (cf.waf.credential_check.password_leaked)"
+        timeout     = 10
         description = "Global rate limit for API endpoints and leaked credentials"
         disabled    = false
         characteristics = ["ip.src", "cf.colo.id"]
@@ -115,6 +115,7 @@ deployment "production" {
     waf_firewall_rules = {}
     # endregion
 
+    # region Argo tunnels
     tunnels = {
       "app" = {
         hostname = "app.karafra.net"
@@ -127,12 +128,9 @@ deployment "production" {
         secret   = "tunnel-secret-api"
       }
     }
-
-    # Access Configuration
     access_groups = {}
     access_applications = {}
     access_policies = {}
   }
-
-
+  # endregion
 }
