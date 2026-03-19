@@ -67,7 +67,7 @@ deployment "production" {
     tls_1_3                  = "on"
     enable_hsts = false
 
-    # WAF Configuration
+    # region WAF Configuration
     waf_custom_rules = [
       {
         description = "Block known bots"
@@ -113,8 +113,20 @@ deployment "production" {
       }
     }
     waf_firewall_rules = {}
+    # endregion
 
-    tunnels = {}
+    tunnels = {
+      "app" = {
+        hostname = "app.karafra.net"
+        service  = "http://localhost:8080"
+        secret   = "tunnel-secret-app"
+      }
+      "api" = {
+        hostname = "api.karafra.net"
+        service  = "http://localhost:3000"
+        secret   = "tunnel-secret-api"
+      }
+    }
 
     # Access Configuration
     access_groups = {}
