@@ -2,11 +2,12 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 5.0"
+      version = "~> 4.0"
     }
   }
 }
 
+# Custom WAF Rules using Rulesets
 resource "cloudflare_ruleset" "waf_custom_rules" {
   count = length(var.custom_rules) > 0 ? 1 : 0
 
@@ -27,41 +28,44 @@ resource "cloudflare_ruleset" "waf_custom_rules" {
   }
 }
 
-resource "cloudflare_rate_limit" "rate_limits" {
-  for_each = var.rate_limits
-
-  zone_id   = var.zone_id
-  threshold = each.value.threshold
-  period    = each.value.period
-
-  description = each.value.description
-  disabled    = try(each.value.disabled, false)
-  action      = ""
-  match       = ""
-}
-
-resource "cloudflare_filter" "filters" {
-  for_each = var.firewall_rules
+# Rate Limiting Rules
+resource "cloudflare_ruleset" "rate_limits" {
+  count = length(var.rate_limits) > 0 ? 1 : 0
 
   zone_id     = var.zone_id
-  description = each.value.description
-  expression  = each.value.expression
-  body {
-    action   = "block"
-    timeout  = 60
-    log      = true
-    paused   = try(each.value.paused, false)
-    priority = try(each.value.priority, null)
+  name        = "Rate Limiting - ${var.name_suffix}"
+  description = "Rate limiting rules for zone"
+  kind        = "zone"
+  phase       = "http_ratelimit"
+
+  dynamic "rules" {
+    for_each = var.rate_limits
+    content {
+      action      = "block"
+      expression  = rules.value.expression
+      description = rules.value.description
+      enabled     = !try(rules.value.disabled, false)
+    }
   }
 }
 
-resource "cloudflare_firewall_rule" "firewall_rules" {
-  for_each = var.firewall_rules
+# Firewall Rules using Rulesets
+resource "cloudflare_ruleset" "firewall_rules" {
+  count = length(var.firewall_rules) > 0 ? 1 : 0
 
   zone_id     = var.zone_id
-  description = each.value.description
-  filter      = cloudflare_filter.filters[each.key]
-  action      = each.value.action
-  priority    = try(each.value.priority, null)
-  paused      = try(each.value.paused, false)
+  name        = "Firewall Rules - ${var.name_suffix}"
+  description = "Firewall rules for zone"
+  kind        = "zone"
+  phase       = "http_request_firewall_custom"
+
+  dynamic "rules" {
+    for_each = var.firewall_rules
+    content {
+      action      = rules.value.action
+      expression  = rules.value.expression
+      description = rules.value.description
+      enabled     = !try(rules.value.paused, false)
+    }
+  }
 }

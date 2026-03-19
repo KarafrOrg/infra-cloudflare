@@ -22,13 +22,13 @@ variable "custom_rules" {
 
 variable "rate_limits" {
   type = map(object({
-    threshold   = number
-    period      = number
-    url_pattern = string
-    action_mode = string
-    timeout     = optional(number)
-    description = string
-    disabled    = optional(bool)
+    threshold       = number
+    period          = number
+    expression      = string
+    timeout         = optional(number)
+    description     = string
+    disabled        = optional(bool)
+    characteristics = optional(list(string))
   }))
   description = "Map of rate limiting rules"
   default     = {}
