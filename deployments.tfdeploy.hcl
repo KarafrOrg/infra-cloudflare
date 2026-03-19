@@ -13,24 +13,38 @@ deployment "production" {
     domain = "karafra.net"
     environment = "prod"
 
+    # DNS Configuration
     dns_records = {
-      "www" = {
-        name    = "www"
-        type    = "CNAME"
-        content = "karafra.net"
-        ttl     = 1
+      "k8s-node1" = {
+        name    = "*"
+        type    = "A"
+        content = "135.125.223.211"
+        ttl     = 3600
         proxied = true
       }
-      "api" = {
-        name    = "api"
-        type    = "CNAME"
+      "k8s-node2" = {
+        name    = "*"
+        type    = "A"
+        content = "37.187.159.125"
+        ttl     = 3600
+        proxied = true
+      }
+      "k8s-node3" = {
+        name    = "*"
+        type    = "A"
+        content = "135.125.223.213"
+        ttl     = 3600
+        proxied = true
+      }
+      "www" = {
+        name    = "www"
+        type    = "A"
         content = "karafra.net"
-        ttl     = 1
+        ttl     = 3600
         proxied = true
       }
     }
 
-    # DNS Configuration
     dns_plan                 = "free"
     ssl_mode                 = "flexible"
     always_use_https         = "on"
