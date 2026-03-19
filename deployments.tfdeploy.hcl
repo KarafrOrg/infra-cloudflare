@@ -106,7 +106,7 @@ deployment "production" {
         threshold   = 1000
         period      = 10
         expression = "(starts_with(http.request.uri.path, \"api\")) or (cf.waf.credential_check.password_leaked)"
-        timeout = 60
+        timeout = 10
         description = "Global rate limit for API endpoints and leaked credentials"
         disabled    = false
         characteristics = ["ip.src", "cf.colo.id"]
