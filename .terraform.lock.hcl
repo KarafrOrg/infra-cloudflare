@@ -1,11 +1,11 @@
-# This file is maintained automatically by "terraform init".
+# This file is maintained automatically by "terraform stacks providers-lock".
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/cloudflare/cloudflare" {
-  version     = "5.15.0"
-  constraints = "5.15.0"
+  version = "5.15.0"
   hashes = [
     "h1:EY8mWQO1NTqXuxnZxwVppF7AiLRdx7vRLYk6O7yzgPs=",
+    "h1:LZytTwtRYkXKX5kJ43GKqkP1NSqJMTrPET/A9s2Vd9s=",
     "h1:kQILtdI9nMz2AYSgbp49LE1XrMfcF1/iuM76KrwJRqQ=",
     "h1:prHyv+irfadmobKZm1LKEBgJKSpcdWQtjUhyJdC9R1E=",
     "zh:20a72bdbb28435f11d165b367732369e8f8163100a214e89ad720dae03fafa0c",
@@ -21,12 +21,12 @@ provider "registry.terraform.io/cloudflare/cloudflare" {
 }
 
 provider "registry.terraform.io/namecheap/namecheap" {
-  version     = "2.2.0"
-  constraints = "2.2.0"
+  version = "2.2.0"
   hashes = [
     "h1:ArYwsu2+T4fIbVpG2W942mwUcGZ8+p9IhrielQyQtAg=",
     "h1:WAoYF2thh6PhrJe1/AxCKGJVfw3aoUmZ3OLIh6hMKBY=",
     "h1:WNWIfriLO2rmzcdQCTnAu7bBeQiFvHC5J5mFJMiqQrk=",
+    "h1:WaS5Ij7pX7EuJD85DO1reQ8VH5244KZ4lkKCpj2bbnw=",
     "zh:0f62f2188e5ca3c9ac5bd8f5133614dc2dfa792ec1c33a86323934a76b781695",
     "zh:2032008962ed89d6d1b2276796acab7a6ba9fef28753520d3e7203ce92b2226d",
     "zh:29bb261da0a194dc5b81163d15b6cd53ed46e7ac9db73ed0b5270e661bd56807",
