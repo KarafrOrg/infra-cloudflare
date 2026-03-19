@@ -36,9 +36,23 @@ deployment "production" {
         ttl     = 1
         proxied = true
       }
+      "k8s-node4" = {
+        name    = "*"
+        type    = "A"
+        content = "5.196.78.186"
+        ttl     = 1
+        proxied = true
+      }
+      "k8s-node5" = {
+        name    = "*"
+        type    = "A"
+        content = "37.187.157.64"
+        ttl     = 1
+        proxied = true
+      }
       "www" = {
         name    = "www"
-        type    = "A"
+        type    = "CNAME"
         content = "karafra.net"
         ttl     = 1
         proxied = true
