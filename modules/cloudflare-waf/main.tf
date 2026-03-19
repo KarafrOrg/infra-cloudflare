@@ -17,17 +17,14 @@ resource "cloudflare_ruleset" "waf_custom_rules" {
   kind        = "zone"
   phase       = "http_request_firewall_custom"
 
-  rules {
-    dynamic "rule" {
-      for_each = var.custom_rules
-      content {
-        action      = rule.value.action
-        expression  = rule.value.expression
-        description = rule.value.description
-        enabled     = try(rule.value.enabled, true)
-      }
+  rules = [
+    for rule in var.custom_rules : {
+      action      = rule.action
+      expression  = rule.expression
+      description = rule.description
+      enabled     = try(rule.enabled, true)
     }
-  }
+  ]
 }
 
 # Rate Limiting Rules using Ruleset
@@ -40,17 +37,14 @@ resource "cloudflare_ruleset" "rate_limits" {
   kind        = "zone"
   phase       = "http_ratelimit"
 
-  rules {
-    dynamic "rule" {
-      for_each = var.rate_limits
-      content {
-        action      = "block"
-        expression  = rule.value.expression
-        description = rule.value.description
-        enabled     = !try(rule.value.disabled, false)
-      }
+  rules = [
+    for key, rule in var.rate_limits : {
+      action      = "block"
+      expression  = rule.expression
+      description = rule.description
+      enabled     = !try(rule.disabled, false)
     }
-  }
+  ]
 }
 
 # Firewall Rules using Ruleset
@@ -63,15 +57,12 @@ resource "cloudflare_ruleset" "firewall_rules" {
   kind        = "zone"
   phase       = "http_request_firewall_custom"
 
-  rules {
-    dynamic "rule" {
-      for_each = var.firewall_rules
-      content {
-        action      = rule.value.action
-        expression  = rule.value.expression
-        description = rule.value.description
-        enabled     = !try(rule.value.paused, false)
-      }
+  rules = [
+    for key, rule in var.firewall_rules : {
+      action      = rule.action
+      expression  = rule.expression
+      description = rule.description
+      enabled     = !try(rule.paused, false)
     }
-  }
+  ]
 }
