@@ -46,6 +46,7 @@ resource "cloudflare_ruleset" "rate_limits" {
       ratelimit = {
         characteristics = try(rule.characteristics, ["ip.src"])
         period          = rule.period
+        requests_per_period = rule.threshold
       }
     }
   ]
