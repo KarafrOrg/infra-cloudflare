@@ -15,9 +15,26 @@ resource "cloudflare_zone" "main" {
 }
 
 resource "cloudflare_zone_dns_settings" "main" {
-  zone_id = cloudflare_zone.main.id
+  zone_id        = cloudflare_zone.main.id
   foundation_dns = false
-  ns_ttl = 86400
+  ns_ttl         = 86400
+  soa = {
+    expire  = 604800
+    min_ttl = 1800
+    refresh = 10000
+    retry   = 2400
+    rname   = "dns.cloudflare.com"
+    ttl     = 3600
+  }
+  zone_mode = "standard"
+  nameservers = {
+    type = "cloudflare.standard"
+  }
+  multi_provider     = false
+  flatten_all_cnames = false
+  internal_dns = {
+    reference_zone_id = cloudflare_zone.main.id
+  }
 }
 
 resource "cloudflare_dns_record" "records" {
