@@ -14,9 +14,11 @@ resource "cloudflare_zero_trust_access_group" "groups" {
   account_id = var.account_id
   name       = "${each.key}-${var.name_suffix}"
 
-  include {
-    email = each.value.emails
-  }
+  include = [
+    {
+      email = each.value.emails
+    }
+  ]
 }
 
 # Cloudflare Access Policies - Define access rules (created before applications)
@@ -27,9 +29,11 @@ resource "cloudflare_zero_trust_access_policy" "policies" {
   name       = "${each.key}-${var.name_suffix}"
   decision   = each.value.decision
 
-  include {
-    group = [cloudflare_zero_trust_access_group.groups[each.value.group_key].id]
-  }
+  include = [
+    {
+      group = [cloudflare_zero_trust_access_group.groups[each.value.group_key].id]
+    }
+  ]
 }
 
 # Cloudflare Access Applications - Define what applications are protected
