@@ -6,7 +6,7 @@ store "varset" "credentials" {
 deployment "production" {
   inputs = {
 
-    cloudflare_account_id = '8a3ba4f6454120fd71c65e87612dd13c'
+    cloudflare_account_id = "8a3ba4f6454120fd71c65e87612dd13c"
     cloudflare_api_key    = store.varset.credentials.cloudflare_api_key
     cloudflare_email      = store.varset.credentials.cloudflare_email
 
