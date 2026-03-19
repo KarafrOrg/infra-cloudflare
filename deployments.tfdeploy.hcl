@@ -19,28 +19,28 @@ deployment "production" {
         name    = "*"
         type    = "A"
         content = "135.125.223.211"
-        ttl     = 3600
+        ttl     = 1
         proxied = true
       }
       "k8s-node2" = {
         name    = "*"
         type    = "A"
         content = "37.187.159.125"
-        ttl     = 3600
+        ttl     = 1
         proxied = true
       }
       "k8s-node3" = {
         name    = "*"
         type    = "A"
         content = "135.125.223.213"
-        ttl     = 3600
+        ttl     = 1
         proxied = true
       }
       "www" = {
         name    = "www"
         type    = "A"
         content = "karafra.net"
-        ttl     = 3600
+        ttl     = 1
         proxied = true
       }
     }
