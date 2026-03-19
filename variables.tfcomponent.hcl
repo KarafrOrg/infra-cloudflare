@@ -37,6 +37,18 @@ variable "dns_plan" {
   default     = "free"
 }
 
+variable "dns_records" {
+  description = "Map of DNS records to create"
+  type = map(object({
+    name    = string
+    type    = string
+    content = string
+    ttl     = optional(number)
+    proxied = optional(bool)
+  }))
+  default = {}
+}
+
 variable "ssl_mode" {
   description = "SSL/TLS encryption mode"
   type        = string

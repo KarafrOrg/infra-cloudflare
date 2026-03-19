@@ -13,6 +13,23 @@ deployment "production" {
     domain = "karafra.net"
     environment = "prod"
 
+    dns_records = {
+      "www" = {
+        name    = "www"
+        type    = "CNAME"
+        content = "karafra.net"
+        ttl     = 1
+        proxied = true
+      }
+      "api" = {
+        name    = "api"
+        type    = "CNAME"
+        content = "karafra.net"
+        ttl     = 1
+        proxied = true
+      }
+    }
+
     # DNS Configuration
     dns_plan                 = "free"
     ssl_mode                 = "flexible"
@@ -35,7 +52,6 @@ deployment "production" {
     waf_rate_limits = {}
     waf_firewall_rules = {}
 
-    # Tunnel Configuration
     tunnels = {}
 
     # Access Configuration
@@ -43,4 +59,6 @@ deployment "production" {
     access_applications = {}
     access_policies = {}
   }
+
+
 }

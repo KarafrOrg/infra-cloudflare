@@ -8,13 +8,7 @@ component "cloudflare_dns" {
   inputs = {
     account_id                = var.cloudflare_account_id
     domain                    = var.domain
-    plan                      = var.dns_plan
-    ssl_mode                  = var.ssl_mode
-    always_use_https          = var.always_use_https
-    automatic_https_rewrites  = var.automatic_https_rewrites
-    min_tls_version           = var.min_tls_version
-    tls_1_3                   = var.tls_1_3
-    enable_hsts               = var.enable_hsts
+    dns_records               = var.dns_records
   }
 }
 
