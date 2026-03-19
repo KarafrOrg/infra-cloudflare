@@ -17,13 +17,15 @@ resource "cloudflare_ruleset" "waf_custom_rules" {
   kind        = "zone"
   phase       = "http_request_firewall_custom"
 
-  dynamic "rules" {
-    for_each = var.custom_rules
-    content {
-      action      = rules.value.action
-      expression  = rules.value.expression
-      description = rules.value.description
-      enabled     = try(rules.value.enabled, true)
+  rules {
+    dynamic "rule" {
+      for_each = var.custom_rules
+      content {
+        action      = rule.value.action
+        expression  = rule.value.expression
+        description = rule.value.description
+        enabled     = try(rule.value.enabled, true)
+      }
     }
   }
 }
@@ -38,13 +40,15 @@ resource "cloudflare_ruleset" "rate_limits" {
   kind        = "zone"
   phase       = "http_ratelimit"
 
-  dynamic "rules" {
-    for_each = var.rate_limits
-    content {
-      action      = "block"
-      expression  = rules.value.expression
-      description = rules.value.description
-      enabled     = !try(rules.value.disabled, false)
+  rules {
+    dynamic "rule" {
+      for_each = var.rate_limits
+      content {
+        action      = "block"
+        expression  = rule.value.expression
+        description = rule.value.description
+        enabled     = !try(rule.value.disabled, false)
+      }
     }
   }
 }
@@ -59,13 +63,15 @@ resource "cloudflare_ruleset" "firewall_rules" {
   kind        = "zone"
   phase       = "http_request_firewall_custom"
 
-  dynamic "rules" {
-    for_each = var.firewall_rules
-    content {
-      action      = rules.value.action
-      expression  = rules.value.expression
-      description = rules.value.description
-      enabled     = !try(rules.value.paused, false)
+  rules {
+    dynamic "rule" {
+      for_each = var.firewall_rules
+      content {
+        action      = rule.value.action
+        expression  = rule.value.expression
+        description = rule.value.description
+        enabled     = !try(rule.value.paused, false)
+      }
     }
   }
 }
