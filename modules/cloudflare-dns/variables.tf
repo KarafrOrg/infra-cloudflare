@@ -1,7 +1,6 @@
 variable "account_id" {
   type        = string
   description = "Cloudflare account ID"
-  ephemeral   = true
   sensitive   = true
 }
 
