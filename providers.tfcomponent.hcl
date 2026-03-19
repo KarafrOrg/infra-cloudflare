@@ -14,11 +14,3 @@ provider "cloudflare" "main" {
     api_key = var.cloudflare_api_key
   }
 }
-
-# Required variable for API token
-variable "cloudflare_api_key" {
-  type        = string
-  description = "Cloudflare API token for authentication"
-  sensitive   = true
-  ephemeral   = true
-}
