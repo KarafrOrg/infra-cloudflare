@@ -1,5 +1,5 @@
 # Authentication variables
-variable "cloudflare_api_key" {
+variable "cloudflare_api_token" {
   description = "Cloudflare API token with permissions to manage DNS records."
   type        = string
   sensitive   = true

@@ -11,7 +11,7 @@ required_providers {
 # Main Cloudflare provider
 provider "cloudflare" "main" {
   config {
-    email   = var.cloudflare_email
-    api_key = var.cloudflare_api_key
+    email     = var.cloudflare_email
+    api_token = var.cloudflare_api_token
   }
 }
