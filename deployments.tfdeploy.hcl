@@ -128,9 +128,48 @@ deployment "production" {
         secret   = "tunnel-secret-api"
       }
     }
-    access_groups = {}
-    access_applications = {}
-    access_policies = {}
+
+    # Access Configuration
+    access_groups = {
+      "developers" = {
+        emails = [
+          "admin@karafra.net",
+          "dev@karafra.net"
+        ]
+      }
+      "api-users" = {
+        emails = [
+          "api-user@karafra.net",
+          "service@karafra.net"
+        ]
+      }
+    }
+
+    access_applications = {
+      "app" = {
+        domain           = "app.karafra.net"
+        session_duration = "24h"
+      }
+      "api" = {
+        domain           = "api.karafra.net"
+        session_duration = "12h"
+      }
+    }
+
+    access_policies = {
+      "allow-developers-to-app" = {
+        app_key    = "app"
+        group_key  = "developers"
+        precedence = 1
+        decision   = "allow"
+      }
+      "allow-api-users-to-api" = {
+        app_key    = "api"
+        group_key  = "api-users"
+        precedence = 1
+        decision   = "allow"
+      }
+    }
   }
   # endregion
 }
