@@ -77,31 +77,25 @@ deployment "production" {
       },
       {
         description = "Block requests with SQL injection patterns"
-        expression  = "(contains(http.request.uri, 'union select') || contains(http.request.uri, 'or 1=1'))"
+        expression  = "(contains(http.request.uri, \"'union select'\") || contains(http.request.uri, \"'or 1=1'\"))"
         action      = "block"
         enabled     = true
       },
       {
         description = "Block XSS attacks"
-        expression  = "(contains(http.request.uri, '<script>') || contains(http.request.uri, '%3Cscript%3E'))"
+        expression  = "(http.request.full_uri contains \"'<script>'\") or (http.request.full_uri contains \"'%3Cscript%3E'\")"
         action      = "block"
         enabled     = true
       },
       {
         description = "Block requests with suspicious query strings"
-        expression  = "(http.request.uri.query contains 'base64_encode' || http.request.uri.query contains 'eval(')"
+        expression  = "(http.request.uri.query contains \"'base64_encode'\" || http.request.uri.query contains \"'eval('\")"
         action      = "block"
         enabled     = true
       },
       {
         description = "Block requests with illegal file extensions"
-        expression  = "(http.request.uri.path matches_regex '\\.(php|asp|aspx|jsp|exe|sh)$')"
-        action      = "block"
-        enabled     = true
-      },
-      {
-        description = "Rate limit excessive requests"
-        expression  = "(count(http.request.headers['x-forwarded-for']) > 1000)"
+        expression  = "(http.request.uri.path matches_regex \"'\\.(php|asp|aspx|jsp|exe|sh)$'\")"
         action      = "block"
         enabled     = true
       },
