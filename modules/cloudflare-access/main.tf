@@ -31,7 +31,7 @@ resource "cloudflare_zero_trust_access_policy" "policies" {
 
   include = [
     {
-      group = [cloudflare_zero_trust_access_group.groups[each.value.group_key].id]
+      group = { id = cloudflare_zero_trust_access_group.groups[each.value.group_key].id }
     }
   ]
 }
