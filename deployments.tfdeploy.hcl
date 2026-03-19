@@ -69,12 +69,50 @@ deployment "production" {
 
     # WAF Configuration
     waf_custom_rules = [
-      {
-        description = "Block bad bots"
-        expression  = "(cf.client.bot)"
-        action      = "block"
-        enabled     = true
-      }
+      [
+        {
+          description = "Block known bots"
+          expression  = "(cf.client.bot)"
+          action      = "block"
+          enabled     = true
+        },
+        {
+          description = "Block requests with SQL injection patterns"
+          expression  = "(contains(http.request.uri, 'union select') || contains(http.request.uri, 'or 1=1'))"
+          action      = "block"
+          enabled     = true
+        },
+        {
+          description = "Block XSS attacks"
+          expression  = "(contains(http.request.uri, '<script>') || contains(http.request.uri, '%3Cscript%3E'))"
+          action      = "block"
+          enabled     = true
+        },
+        {
+          description = "Block requests with suspicious query strings"
+          expression  = "(http.request.uri.query contains 'base64_encode' || http.request.uri.query contains 'eval(')"
+          action      = "block"
+          enabled     = true
+        },
+        {
+          description = "Block requests with illegal file extensions"
+          expression  = "(http.request.uri.path matches_regex '\\.(php|asp|aspx|jsp|exe|sh)$')"
+          action      = "block"
+          enabled     = true
+        },
+        {
+          description = "Rate limit excessive requests"
+          expression  = "(count(http.request.headers['x-forwarded-for']) > 1000)"
+          action      = "block"
+          enabled     = true
+        },
+        {
+          description = "Block requests from specific countries"
+          expression  = "(cf.client.geo.country in {'CN', 'RU', 'KP'})"
+          action      = "block"
+          enabled     = true
+        }
+      ]
     ]
 
     waf_rate_limits = {}
