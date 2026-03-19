@@ -1,5 +1,14 @@
+store "varset" "credentials" {
+  name     = "infra-cloudflare-variables"
+  category = "terraform"
+}
+
 deployment "production" {
   inputs = {
+
+    cloudflare_account_id = store.varset.credentials.cloudflare_account_id
+    cloudflare_api_key    = store.varset.credentials.cloudflare_api_key
+    cloudflare_email      = store.varset.credentials.cloudflare_email
 
     domain = "example.com"
     environment = "prod"

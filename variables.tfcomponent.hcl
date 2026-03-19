@@ -1,6 +1,3 @@
-# Copyright (c) HashiCorp, Inc.
-# SPDX-License-Identifier: MPL-2.0
-
 # Authentication variables
 variable "cloudflare_api_key" {
   description = "Cloudflare API token with permissions to manage DNS records."
@@ -82,7 +79,7 @@ variable "waf_custom_rules" {
     action      = string
     expression  = string
     description = string
-    enabled     = optional(bool)
+    enabled = optional(bool)
   }))
   default = []
 }
@@ -90,12 +87,12 @@ variable "waf_custom_rules" {
 variable "waf_rate_limits" {
   description = "Map of rate limiting rules"
   type = map(object({
-    threshold       = number
-    period          = number
-    expression      = string
-    timeout         = optional(number)
-    description     = string
-    disabled        = optional(bool)
+    threshold   = number
+    period      = number
+    expression  = string
+    timeout = optional(number)
+    description = string
+    disabled = optional(bool)
     characteristics = optional(list(string))
   }))
   default = {}
@@ -107,8 +104,8 @@ variable "waf_firewall_rules" {
     expression  = string
     description = string
     action      = string
-    priority    = optional(number)
-    paused      = optional(bool)
+    priority = optional(number)
+    paused = optional(bool)
   }))
   default = {}
 }
@@ -136,7 +133,7 @@ variable "access_groups" {
 variable "access_applications" {
   description = "Map of access application configurations"
   type = map(object({
-    domain           = string
+    domain = string
     session_duration = optional(string)
   }))
   default = {}
