@@ -28,3 +28,8 @@ resource "cloudflare_dns_record" "records" {
   ttl     = try(each.value.ttl, 1)
   proxied = try(each.value.proxied, true)
 }
+
+import {
+  id = "bfae39879d315652a674aac0955e1712"
+  to = cloudflare_zone.main
+}
