@@ -28,7 +28,7 @@ resource "cloudflare_ruleset" "waf_custom_rules" {
   }
 }
 
-# Rate Limiting Rules
+# Rate Limiting Rules using Ruleset
 resource "cloudflare_ruleset" "rate_limits" {
   count = length(var.rate_limits) > 0 ? 1 : 0
 
@@ -49,7 +49,7 @@ resource "cloudflare_ruleset" "rate_limits" {
   }
 }
 
-# Firewall Rules using Rulesets
+# Firewall Rules using Ruleset
 resource "cloudflare_ruleset" "firewall_rules" {
   count = length(var.firewall_rules) > 0 ? 1 : 0
 
