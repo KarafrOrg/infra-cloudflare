@@ -10,7 +10,7 @@ deployment "production" {
     cloudflare_api_token  = store.varset.credentials.cloudflare_api_token
     cloudflare_email      = store.varset.credentials.cloudflare_email
 
-    domain = "argocd.karafra.net"
+    domain = "karafra.net"
     environment = "prod"
 
     # DNS Configuration
