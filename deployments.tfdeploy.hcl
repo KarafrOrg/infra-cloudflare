@@ -77,7 +77,7 @@ deployment "production" {
       },
       {
         description = "Block requests with SQL injection patterns"
-        expression  = "(contains(http.request.uri, \"'union select'\") || contains(http.request.uri, \"'or 1=1'\"))"
+        expression  = "(http.request.uri contains \"'union select'\") or (http.request.uri contains \"'or 1=1'\")"
         action      = "block"
         enabled     = true
       },
@@ -95,13 +95,13 @@ deployment "production" {
       },
       {
         description = "Block requests with illegal file extensions"
-        expression  = "(http.request.uri.path matches_regex \"'\\.(php|asp|aspx|jsp|exe|sh)$'\")"
+        expression  = "(http.request.uri.path matches r\".(php|asp|aspx|jsp|exe|sh)$\")"
         action      = "block"
         enabled     = true
       },
       {
         description = "Block requests from specific countries"
-        expression  = "(cf.client.geo.country in {'CN', 'RU', 'KP'})"
+        expression  = "(ip.src.country in {\"CN\" \"RU\" \"KP\"})"
         action      = "block"
         enabled     = true
       }
