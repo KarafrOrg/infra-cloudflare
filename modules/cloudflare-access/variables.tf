@@ -1,12 +1,6 @@
 variable "account_id" {
   type        = string
   description = "Cloudflare account ID"
-  ephemeral   = true
-}
-
-variable "zone_id" {
-  type        = string
-  description = "Cloudflare zone ID"
 }
 
 variable "name_suffix" {
