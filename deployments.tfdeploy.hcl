@@ -88,12 +88,6 @@ deployment "production" {
         enabled     = true
       },
       {
-        description = "Block requests with suspicious query strings"
-        expression  = "(http.request.uri.query contains \"'base64_encode'\" || http.request.uri.query contains \"'eval('\")"
-        action      = "block"
-        enabled     = true
-      },
-      {
         description = "Block requests with illegal file extensions"
         expression  = "(http.request.uri.path matches r\".(php|asp|aspx|jsp|exe|sh)$\")"
         action      = "block"
