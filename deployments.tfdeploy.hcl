@@ -1,9 +1,8 @@
 deployment "production" {
   inputs = {
     cloudflare_account_id = "your-cloudflare-account-id"
-    cloudflare_api_token = var.cloudflare_api_token  # Set as TFC variable
     domain                = "example.com"
-    environment = "prod"
+    environment           = "prod"
 
     # DNS Records
     dns_records = [
