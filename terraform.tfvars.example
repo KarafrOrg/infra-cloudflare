@@ -1,0 +1,8 @@
+# Terraform Variables Example
+# Copy this file to terraform.tfvars and fill in your values
+
+# Cloudflare API Key
+cloudflare_api_key = "your-cloudflare-api-key-here"
+
+# Cloudflare Email
+cloudflare_email = "your-email@example.com"
