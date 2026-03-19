@@ -11,7 +11,7 @@ resource "cloudflare_zone" "main" {
   account = {
     id = var.account_id
   }
-  name = "main"
+  name = var.domain
 }
 
 resource "cloudflare_zone_dns_settings" "main" {
