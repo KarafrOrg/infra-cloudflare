@@ -44,7 +44,7 @@ resource "cloudflare_ruleset" "rate_limits" {
       description = rule.description
       enabled     = !try(rule.disabled, false)
       ratelimit = {
-        characteristics = try(rule.characteristics, ["ip"])
+        characteristics = try(rule.characteristics, ["ip.src"])
         period          = rule.period
       }
     }
