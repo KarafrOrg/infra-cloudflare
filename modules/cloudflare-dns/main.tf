@@ -1,4 +1,4 @@
-resource "cloudflare_zone" "main" {
+data "cloudflare_zone" "main" {
   account = {
     id = var.account_id
   }
@@ -6,7 +6,7 @@ resource "cloudflare_zone" "main" {
 }
 
 resource "cloudflare_zone_dns_settings" "main" {
-  zone_id        = cloudflare_zone.main.id
+  zone_id        = data.cloudflare_zone.main.id
   foundation_dns = false
   ns_ttl         = 86400
   soa = {
@@ -30,7 +30,7 @@ resource "cloudflare_zone_dns_settings" "main" {
 resource "cloudflare_dns_record" "records" {
   for_each = var.dns_records
 
-  zone_id = cloudflare_zone.main.id
+  zone_id = data.cloudflare_zone.main.id
   name    = each.value.name
   type    = each.value.type
   content = each.value.content
