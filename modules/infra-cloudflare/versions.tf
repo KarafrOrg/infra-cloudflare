@@ -6,17 +6,4 @@ terraform {
       version = "~> 5.0"
     }
   }
-  backend "remote" {
-    hostname     = "app.terraform.io"
-    organization = "karafra-net"
-
-    workspaces {
-      name = "infra-cloudflare"
-    }
-  }
 }
-
-provider "cloudflare" {
-  api_token = var.cloudflare_api_token
-}
-
