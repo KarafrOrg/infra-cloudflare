@@ -1,21 +1,21 @@
 output "zone_id" {
   description = "The Cloudflare zone ID"
-  value       = cloudflare_zone.main.id
+  value       = data.cloudflare_zone.main.id
 }
 
 output "zone_name" {
   description = "The domain name"
-  value       = cloudflare_zone.main.name
+  value       = data.cloudflare_zone.main.name
 }
 
 output "nameservers" {
   description = "Cloudflare name servers for the zone"
-  value       = cloudflare_zone.main.name_servers
+  value       = data.cloudflare_zone.main.name_servers
 }
 
 output "status" {
   description = "Status of the zone"
-  value       = cloudflare_zone.main.status
+  value       = data.cloudflare_zone.main.status
 }
 
 output "dns_record_ids" {
