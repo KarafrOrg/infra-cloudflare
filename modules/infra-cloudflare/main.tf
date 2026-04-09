@@ -2,7 +2,6 @@ module "cloudflare_dns" {
   source = "../../modules/cloudflare-dns"
 
   zone_id = var.zone_id
-  account_id  = var.cloudflare_account_id
   domain      = var.domain
   dns_records = var.dns_records
 }
