@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 4.0"
-    }
-  }
-}
-
 resource "cloudflare_zero_trust_tunnel_cloudflared" "tunnels" {
   for_each = var.tunnels
 

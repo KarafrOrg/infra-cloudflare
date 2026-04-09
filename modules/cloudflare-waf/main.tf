@@ -1,13 +1,3 @@
-terraform {
-  required_providers {
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 5.0"
-    }
-  }
-}
-
-# Custom WAF Rules using Rulesets
 resource "cloudflare_ruleset" "waf_custom_rules" {
   count = length(var.custom_rules) > 0 ? 1 : 0
 
@@ -27,7 +17,6 @@ resource "cloudflare_ruleset" "waf_custom_rules" {
   ]
 }
 
-# Rate Limiting Rules using Ruleset
 resource "cloudflare_ruleset" "rate_limits" {
   count = length(var.rate_limits) > 0 ? 1 : 0
 
@@ -53,7 +42,6 @@ resource "cloudflare_ruleset" "rate_limits" {
   ]
 }
 
-# Firewall Rules using Ruleset
 resource "cloudflare_ruleset" "firewall_rules" {
   count = length(var.firewall_rules) > 0 ? 1 : 0
 

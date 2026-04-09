@@ -1,13 +1,3 @@
-terraform {
-  required_providers {
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 4.0"
-    }
-  }
-}
-
-# Cloudflare Access Groups - Define who can access applications
 resource "cloudflare_zero_trust_access_group" "groups" {
   for_each = var.access_groups
 
@@ -23,7 +13,6 @@ resource "cloudflare_zero_trust_access_group" "groups" {
   ]
 }
 
-# Cloudflare Access Policies - Define access rules (created before applications)
 resource "cloudflare_zero_trust_access_policy" "policies" {
   for_each = var.access_policies
 
