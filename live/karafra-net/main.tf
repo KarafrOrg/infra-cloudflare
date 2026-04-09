@@ -1,44 +1,17 @@
 module "infra-cloudflare" {
-  source = "../../modules/infra-cloudflare"
+  source                = "../../modules/infra-cloudflare"
   cloudflare_account_id = var.cloudflare_account_id
-  cloudflare_api_token = var.cloudflare_api_token
-  domain = var.domain
-  environment = var.environment
-}
-module "cloudflare_dns" {
-  source = "../../modules/cloudflare-dns"
-
-  account_id  = var.cloudflare_account_id
-  domain      = var.domain
-  dns_records = var.dns_records
-}
-
-module "cloudflare_waf" {
-  source = "../../modules/cloudflare-waf"
-
-  zone_id        = module.cloudflare_dns.zone_id
-  name_suffix    = var.environment
-  custom_rules   = var.waf_custom_rules
-  rate_limits    = var.waf_rate_limits
-  firewall_rules = var.waf_firewall_rules
-}
-
-module "cloudflare_tunnel" {
-  source = "../../modules/cloudflare-tunnel"
-
-  account_id  = var.cloudflare_account_id
-  zone_id     = module.cloudflare_dns.zone_id
-  name_suffix = var.environment
-  tunnels     = var.tunnels
-}
-
-module "cloudflare_access" {
-  source = "../../modules/cloudflare-access"
-
-  account_id          = var.cloudflare_account_id
-  name_suffix         = var.environment
-  access_groups       = var.access_groups
-  access_applications = var.access_applications
-  access_policies     = var.access_policies
+  cloudflare_api_token  = var.cloudflare_api_token
+  domain                = var.domain
+  environment           = var.environment
+  zone_id               = var.zone_id
+  dns_records           = var.dns_records
+  waf_custom_rules      = var.waf_custom_rules
+  waf_rate_limits       = var.waf_rate_limits
+  waf_firewall_rules    = var.waf_firewall_rules
+  tunnels               = var.tunnels
+  access_groups         = var.access_groups
+  access_applications   = var.access_applications
+  access_policies       = var.access_policies
 }
 

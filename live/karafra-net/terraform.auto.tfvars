@@ -2,6 +2,7 @@ cloudflare_account_id = "8a3ba4f6454120fd71c65e87612dd13c"
 
 domain      = "karafra.net"
 environment = "prod"
+zone_id     = "bfae39879d315652a674aac0955e1712"
 
 dns_records = {
   "k8s-node1" = {

@@ -16,6 +16,11 @@ variable "environment" {
   type        = string
 }
 
+variable "zone_id" {
+  description = "Cloudflare zone ID for the domain."
+  type        = string
+}
+
 variable "domain" {
   description = "The root domain name to manage in Cloudflare."
   type        = string

@@ -1,8 +1,5 @@
 data "cloudflare_zone" "main" {
-  account = {
-    id = var.account_id
-  }
-  name = var.domain
+  zone_id = var.zone_id
 }
 
 resource "cloudflare_zone_dns_settings" "main" {
