@@ -1,6 +1,7 @@
-variable "zone_id" {
+variable "account_id" {
   type        = string
   description = "Cloudflare account ID"
+  sensitive   = true
 }
 
 variable "domain" {

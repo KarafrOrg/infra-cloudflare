@@ -1,11 +1,23 @@
-data "cloudflare_zone" "main" {
-  zone_id = var.zone_id
+resource "cloudflare_zone" "main" {
+  account = {
+    id = var.account_id
+  }
+  name = var.domain
+  type = "full"
 }
 
 resource "cloudflare_zone_dns_settings" "main" {
-  zone_id        = data.cloudflare_zone.main.id
+  zone_id        = cloudflare_zone.main.id
   foundation_dns = false
   ns_ttl         = 86400
+  zone_mode      = "standard"
+  nameservers = {
+    type = "cloudflare.standard"
+  }
+  secondary_overrides = false
+  multi_provider      = false
+  flatten_all_cnames  = false
+  internal_dns        = {}
   soa = {
     expire  = 604800
     min_ttl = 1800
@@ -14,20 +26,12 @@ resource "cloudflare_zone_dns_settings" "main" {
     rname   = "dns.cloudflare.com"
     ttl     = 3600
   }
-  zone_mode = "standard"
-  nameservers = {
-    type = "cloudflare.standard"
-  }
-  secondary_overrides = false
-  multi_provider      = false
-  flatten_all_cnames  = false
-  internal_dns        = {}
 }
 
 resource "cloudflare_dns_record" "records" {
   for_each = var.dns_records
 
-  zone_id = data.cloudflare_zone.main.id
+  zone_id = cloudflare_zone.main.id
   name    = each.value.name
   type    = each.value.type
   content = each.value.content

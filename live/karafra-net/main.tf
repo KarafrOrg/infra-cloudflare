@@ -1,10 +1,9 @@
 module "infra-cloudflare" {
   source                = "../../modules/infra-cloudflare"
-  cloudflare_account_id = var.cloudflare_account_id
   cloudflare_api_token  = var.cloudflare_api_token
+  cloudflare_account_id = var.cloudflare_account_id
   domain                = var.domain
   environment           = var.environment
-  zone_id               = var.zone_id
   dns_records           = var.dns_records
   waf_custom_rules      = var.waf_custom_rules
   waf_rate_limits       = var.waf_rate_limits
