@@ -7,6 +7,8 @@ get_secret() {
 
 cat > live/${ENVIRONMENT}/secrets.auto.tfvars <<EOF
 cloudflare_api_token = "$(get_secret cloudflare-api-token)"
+github_client_id     = "$(get_secret cloudflare-github-client-id)"
+github_client_secret = "$(get_secret cloudflare-github-client-secret)"
 EOF
 
 echo "Secrets written to live/${ENVIRONMENT}/secrets.auto.tfvars"

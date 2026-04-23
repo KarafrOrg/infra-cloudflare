@@ -28,10 +28,11 @@ module "cloudflare_tunnel" {
 module "cloudflare_access" {
   source = "../../modules/cloudflare-access"
 
-  account_id          = var.cloudflare_account_id
-  name_suffix         = var.environment
-  access_groups       = var.access_groups
-  access_applications = var.access_applications
-  access_policies     = var.access_policies
+  account_id           = var.cloudflare_account_id
+  name_suffix          = var.environment
+  github_client_id     = var.github_client_id
+  github_client_secret = var.github_client_secret
+  access_groups        = var.access_groups
+  access_applications  = var.access_applications
+  access_policies      = var.access_policies
 }
-

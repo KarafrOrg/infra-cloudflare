@@ -5,6 +5,17 @@ variable "cloudflare_api_token" {
   ephemeral   = true
 }
 
+variable "github_client_id" {
+  description = "GitHub OAuth app client ID for Cloudflare Access identity provider."
+  type        = string
+}
+
+variable "github_client_secret" {
+  description = "GitHub OAuth app client secret for Cloudflare Access identity provider."
+  type        = string
+  sensitive   = true
+}
+
 variable "cloudflare_account_id" {
   description = "Cloudflare account ID."
   type        = string
@@ -83,7 +94,11 @@ variable "tunnels" {
 variable "access_groups" {
   description = "Map of access group configurations."
   type = map(object({
-    emails = list(string)
+    emails = optional(list(string), [])
+    github_teams = optional(list(object({
+      org  = string
+      team = optional(string)
+    })), [])
   }))
   default = {}
 }

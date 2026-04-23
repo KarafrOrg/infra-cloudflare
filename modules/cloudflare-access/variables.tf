@@ -8,9 +8,24 @@ variable "name_suffix" {
   description = "Suffix for resource names (usually environment)"
 }
 
+variable "github_client_id" {
+  type        = string
+  description = "GitHub OAuth app client ID for Cloudflare Access identity provider."
+}
+
+variable "github_client_secret" {
+  type        = string
+  description = "GitHub OAuth app client secret for Cloudflare Access identity provider."
+  sensitive   = true
+}
+
 variable "access_groups" {
   type = map(object({
-    emails = list(string)
+    emails = optional(list(string), [])
+    github_teams = optional(list(object({
+      org  = string
+      team = optional(string)
+    })), [])
   }))
   description = "Map of access group configurations"
   default     = {}

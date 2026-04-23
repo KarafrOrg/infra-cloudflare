@@ -1,16 +1,35 @@
+resource "cloudflare_zero_trust_access_identity_provider" "github" {
+  name       = "github-idp"
+  type       = "github"
+  account_id = var.account_id
+  config = {
+    client_id     = var.github_client_id
+    client_secret = var.github_client_secret
+  }
+}
+
 resource "cloudflare_zero_trust_access_group" "groups" {
   for_each = var.access_groups
 
   account_id = var.account_id
   name       = "${each.key}-${var.name_suffix}"
 
-  include = [
-    for email in each.value.emails : {
-      email = {
-        email = email
+  include = concat(
+    [
+      for email in each.value.emails : {
+        email = { email = email }
       }
-    }
-  ]
+    ],
+    [
+      for gh in each.value.github_teams : {
+        github_organization = {
+          identity_provider_id = cloudflare_zero_trust_access_identity_provider.github.id
+          name                 = gh.org
+          team                 = try(gh.team, null)
+        }
+      }
+    ]
+  )
 }
 
 resource "cloudflare_zero_trust_access_policy" "policies" {

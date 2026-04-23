@@ -96,56 +96,36 @@ waf_rate_limits = {
 waf_firewall_rules = {}
 
 tunnels = {
-  "app" = {
-    hostname = "app.karafra.net"
-    service  = "http://localhost:8080"
+  "talos-tunnel" = {
+    hostname = "talos.lan.karafra.net"
+    service  = "tcp://localhost:50000"
     secret   = "tunnel-secret-app"
-  }
-  "api" = {
-    hostname = "api.karafra.net"
-    service  = "http://localhost:3000"
-    secret   = "tunnel-secret-api"
   }
 }
 
 access_groups = {
-  "developers" = {
-    emails = [
-      "admin@karafra.net",
-      "dev@karafra.net"
-    ]
-  }
-  "api-users" = {
-    emails = [
-      "api-user@karafra.net",
-      "service@karafra.net"
+  "talos-admins" = {
+    github_teams = [
+      {
+        org  = "KarafrOrg"
+        team = "talos-admins"
+      }
     ]
   }
 }
 
 access_applications = {
-  "app" = {
-    domain           = "app.karafra.net"
+  "talos-kubernetes-nodes" = {
+    domain           = "talos.lan.karafra.net"
     session_duration = "24h"
-  }
-  "api" = {
-    domain           = "api.karafra.net"
-    session_duration = "12h"
   }
 }
 
 access_policies = {
-  "allow-developers-to-app" = {
-    app_key    = "app"
-    group_key  = "developers"
-    precedence = 1
-    decision   = "allow"
-  }
-  "allow-api-users-to-api" = {
-    app_key    = "api"
-    group_key  = "api-users"
+  "allow-developers-to-talos-nodes" = {
+    app_key    = "talos-kubernetes-nodes"
+    group_key  = "talos-admins"
     precedence = 1
     decision   = "allow"
   }
 }
-
