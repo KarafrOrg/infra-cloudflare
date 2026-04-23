@@ -111,6 +111,7 @@ access_groups = {
         team = "talos-admins"
       }
     ]
+    emails = ["mtoth575@gmail.com"]
   }
 }
 
