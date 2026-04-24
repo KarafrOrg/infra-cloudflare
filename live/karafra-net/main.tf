@@ -15,4 +15,3 @@ module "infra-cloudflare" {
   github_client_id      = var.github_client_id
   github_client_secret  = var.github_client_secret
 }
-

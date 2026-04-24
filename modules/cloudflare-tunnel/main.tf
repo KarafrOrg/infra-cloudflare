@@ -42,3 +42,21 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "tunnel_configs" {
     ]
   }
 }
+
+resource "cloudflare_zero_trust_tunnel_cloudflared_route" "cidr_routes" {
+  for_each = {
+    for entry in flatten([
+      for tunnel_key, tunnel in var.tunnels : [
+        for cidr in tunnel.cidr_routes : {
+          key        = "${tunnel_key}__${replace(cidr, "/", "_")}"
+          tunnel_key = tunnel_key
+          cidr       = cidr
+        }
+      ]
+    ]) : entry.key => entry
+  }
+
+  account_id = var.account_id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.tunnels[each.value.tunnel_key].id
+  network    = each.value.cidr
+}

@@ -84,9 +84,10 @@ variable "waf_firewall_rules" {
 variable "tunnels" {
   description = "Map of tunnel configurations."
   type = map(object({
-    service  = string
-    hostname = string
-    secret   = string
+    service     = string
+    hostname    = string
+    secret      = string
+    cidr_routes = optional(list(string), [])
   }))
   default = {}
 }

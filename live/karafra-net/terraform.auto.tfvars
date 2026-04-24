@@ -97,9 +97,10 @@ waf_firewall_rules = {}
 
 tunnels = {
   "talos-tunnel" = {
-    hostname = "talos.lan.karafra.net"
-    service  = "tcp://localhost:50000"
-    secret   = "tunnel-secret-app"
+    hostname    = "talos.lan.karafra.net"
+    service     = "tcp://localhost:50000"
+    secret      = "tunnel-secret-app"
+    cidr_routes = ["10.10.0.0/16"]
   }
 }
 
