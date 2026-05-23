@@ -5,6 +5,7 @@ module "infra-cloudflare" {
   domain                = var.domain
   environment           = var.environment
   dns_records           = var.dns_records
+  edge_certificates     = var.edge_certificates
   waf_custom_rules      = var.waf_custom_rules
   waf_rate_limits       = var.waf_rate_limits
   waf_firewall_rules    = var.waf_firewall_rules

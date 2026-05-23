@@ -23,6 +23,21 @@ output "dns_record_ids" {
   value       = module.cloudflare_dns.dns_record_ids
 }
 
+output "edge_certificate_pack_ids" {
+  description = "Map of edge certificate pack IDs keyed by certificate name."
+  value       = module.cloudflare_edge_certificates.edge_certificate_pack_ids
+}
+
+output "edge_certificate_pack_statuses" {
+  description = "Map of edge certificate pack statuses keyed by certificate name."
+  value       = module.cloudflare_edge_certificates.edge_certificate_pack_statuses
+}
+
+output "edge_certificate_pack_hosts" {
+  description = "Map of host lists for each edge certificate pack."
+  value       = module.cloudflare_edge_certificates.edge_certificate_pack_hosts
+}
+
 output "waf_custom_ruleset_id" {
   description = "ID of the custom WAF ruleset."
   value       = module.cloudflare_waf.ruleset_id

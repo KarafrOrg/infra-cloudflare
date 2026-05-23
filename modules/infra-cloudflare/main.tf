@@ -6,6 +6,13 @@ module "cloudflare_dns" {
   dns_records = var.dns_records
 }
 
+module "cloudflare_edge_certificates" {
+  source = "../../modules/cloudflare-edge-certificates"
+
+  zone_id           = module.cloudflare_dns.zone_id
+  edge_certificates = var.edge_certificates
+}
+
 module "cloudflare_waf" {
   source = "../../modules/cloudflare-waf"
 

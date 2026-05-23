@@ -14,7 +14,10 @@ data "cloudflare_zero_trust_tunnel_cloudflared_token" "tunnel_tokens" {
 }
 
 resource "cloudflare_dns_record" "tunnel_records" {
-  for_each = var.tunnels
+  for_each = {
+    for tunnel_key, tunnel in var.tunnels : tunnel_key => tunnel
+    if try(tunnel.create_dns_record, true)
+  }
 
   zone_id = var.zone_id
   name    = each.value.hostname

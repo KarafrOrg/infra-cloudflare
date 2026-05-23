@@ -17,9 +17,10 @@ variable "tunnels" {
   default     = {}
   description = "Map of tunnel configurations"
   type = map(object({
-    service     = string
-    hostname    = string
-    secret      = string
-    cidr_routes = optional(list(string), [])
+    service           = string
+    hostname          = string
+    secret            = string
+    create_dns_record = optional(bool, true)
+    cidr_routes       = optional(list(string), [])
   }))
 }

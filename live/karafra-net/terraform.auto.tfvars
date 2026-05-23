@@ -48,6 +48,17 @@ dns_records = {
   }
 }
 
+edge_certificates = {
+  openstack-dashboard = {
+    hosts                 = ["dashboard.openstack.lan.karafra.net"]
+    type                  = "advanced"
+    validation_method     = "txt"
+    validity_days         = 90
+    certificate_authority = "lets_encrypt"
+    cloudflare_branding   = false
+  }
+}
+
 waf_custom_rules = [
   {
     description = "Block known bots"
@@ -96,11 +107,12 @@ waf_rate_limits = {
 waf_firewall_rules = {}
 
 tunnels = {
-  "talos-tunnel" = {
-    hostname    = "talos.lan.karafra.net"
-    service     = "tcp://localhost:50000"
-    secret      = "tunnel-secret-app"
-    cidr_routes = ["10.10.0.0/16"]
+  openstack-dashboard = {
+    hostname          = "dashboard.openstack.lan.karafra.net"
+    service           = "http://10.200.0.1:80"
+    secret            = "openstack-dashboard-tunnel"
+    create_dns_record = false
+    cidr_routes       = []
   }
 }
 
@@ -117,15 +129,15 @@ access_groups = {
 }
 
 access_applications = {
-  "talos-kubernetes-nodes" = {
-    domain           = "talos.lan.karafra.net"
+  "openstack-dashboard" = {
+    domain           = "dashboard.openstack.lan.karafra.net"
     session_duration = "24h"
   }
 }
 
 access_policies = {
-  "allow-developers-to-talos-nodes" = {
-    app_key    = "talos-kubernetes-nodes"
+  allow-developers-to-openstack-dashboard = {
+    app_key    = "openstack-dashboard"
     group_key  = "talos-admins"
     precedence = 1
     decision   = "allow"

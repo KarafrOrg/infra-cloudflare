@@ -44,6 +44,20 @@ variable "dns_records" {
   default = {}
 }
 
+variable "edge_certificates" {
+  description = "Map of edge certificate pack configurations keyed by logical name."
+  type = map(object({
+    enabled               = optional(bool, true)
+    hosts                 = list(string)
+    type                  = optional(string)
+    validation_method     = optional(string)
+    validity_days         = optional(number)
+    certificate_authority = optional(string)
+    cloudflare_branding   = optional(bool)
+  }))
+  default = {}
+}
+
 variable "waf_custom_rules" {
   description = "List of custom WAF rules."
   type = list(object({
@@ -84,10 +98,11 @@ variable "waf_firewall_rules" {
 variable "tunnels" {
   description = "Map of tunnel configurations."
   type = map(object({
-    service     = string
-    hostname    = string
-    secret      = string
-    cidr_routes = optional(list(string), [])
+    service           = string
+    hostname          = string
+    secret            = string
+    create_dns_record = optional(bool, true)
+    cidr_routes       = optional(list(string), [])
   }))
   default = {}
 }
