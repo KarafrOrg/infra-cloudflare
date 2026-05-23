@@ -26,10 +26,14 @@ module "cloudflare_waf" {
 module "cloudflare_tunnel" {
   source = "../../modules/cloudflare-tunnel"
 
-  account_id  = var.cloudflare_account_id
-  zone_id     = module.cloudflare_dns.zone_id
-  name_suffix = var.environment
-  tunnels     = var.tunnels
+  account_id                     = var.cloudflare_account_id
+  zone_id                        = module.cloudflare_dns.zone_id
+  name_suffix                    = var.environment
+  tunnels                        = var.tunnels
+  gcp_push_tunnel_tokens         = var.gcp_push_tunnel_tokens
+  gcp_project_id                 = var.gcp_project_id
+  gcp_tunnel_token_secret_prefix = var.gcp_tunnel_token_secret_prefix
+  gcp_secret_labels              = var.gcp_secret_labels
 }
 
 module "cloudflare_access" {

@@ -3,6 +3,14 @@ cloudflare_account_id = "8a3ba4f6454120fd71c65e87612dd13c"
 domain      = "karafra.net"
 environment = "prod"
 
+gcp_push_tunnel_tokens         = true
+gcp_tunnel_token_secret_prefix = "cloudflare-tunnel-token-"
+gcp_secret_labels = {
+  managed_by = "terraform"
+  stack      = "infra-cloudflare"
+  env        = "prod"
+}
+
 dns_records = {
   "k8s-node1" = {
     name    = "*"

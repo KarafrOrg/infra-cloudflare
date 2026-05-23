@@ -54,6 +54,11 @@ output "tunnel_cnames" {
   value       = module.infra-cloudflare.tunnel_cnames
 }
 
+output "gcp_tunnel_token_secret_ids" {
+  description = "Map of GCP Secret Manager secret IDs keyed by tunnel name."
+  value       = module.infra-cloudflare.gcp_tunnel_token_secret_ids
+}
+
 output "access_group_ids" {
   description = "Map of Access group IDs keyed by group name."
   value       = module.infra-cloudflare.access_group_ids

@@ -13,3 +13,9 @@ output "tunnel_cnames" {
   description = "Map of tunnel CNAME records"
   value       = { for k, v in cloudflare_dns_record.tunnel_records : k => v.content }
 }
+
+output "gcp_tunnel_token_secret_ids" {
+  description = "Map of GCP Secret Manager secret IDs keyed by tunnel name"
+  value       = { for k, v in google_secret_manager_secret.tunnel_tokens : k => v.id }
+}
+
