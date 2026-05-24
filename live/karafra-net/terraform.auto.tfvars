@@ -3,7 +3,7 @@ cloudflare_account_id = "8a3ba4f6454120fd71c65e87612dd13c"
 domain      = "karafra.net"
 environment = "prod"
 
-gcp_push_tunnel_tokens         = true
+gcp_push_tunnel_tokens       = true
 gcp_tunnel_token_secret_prefix = "cloudflare-tunnel-token-"
 gcp_secret_labels = {
   managed_by = "terraform"
@@ -120,7 +120,7 @@ tunnels = {
     service           = "http://10.200.0.1:80"
     secret            = "openstack-dashboard-tunnel"
     create_dns_record = false
-    cidr_routes       = []
+    cidr_routes       = ["10.200.0.1/32"]
   }
 }
 
