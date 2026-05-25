@@ -2,7 +2,7 @@
 description = "Fetch secrets from GCP Secret Manager into Terraform auto vars"
 run = """
 get_secret() {
-  gcloud secrets versions access latest --project="$PROJECT_ID" --secret="$1"
+  gcloud secrets versions access latest --project="$(gcloud config get-value project)" --secret="$1"
 }
 
 cat > live/${ENVIRONMENT}/secrets.auto.tfvars <<EOF
