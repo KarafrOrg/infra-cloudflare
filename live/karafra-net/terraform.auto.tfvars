@@ -65,6 +65,14 @@ edge_certificates = {
     certificate_authority = "lets_encrypt"
     cloudflare_branding   = false
   }
+  openstack-api = {
+    hosts                 = ["api.openstack.lan.karafra.net"]
+    type                  = "advanced"
+    validation_method     = "txt"
+    validity_days         = 90
+    certificate_authority = "lets_encrypt"
+    cloudflare_branding   = false
+  }
 }
 
 waf_custom_rules = [
@@ -119,6 +127,13 @@ tunnels = {
     hostname          = "dashboard.openstack.lan.karafra.net"
     service           = "http://10.200.0.1:80"
     secret            = "openstack-dashboard-tunnel"
+    create_dns_record = false
+    cidr_routes       = ["10.200.0.1/32"]
+  }
+  openstack-api = {
+    hostname          = "api.openstack.lan.karafra.net"
+    service           = "http://10.200.0.1:5000"
+    secret            = "openstack-api-tunnel"
     create_dns_record = false
     cidr_routes       = ["10.200.0.1/32"]
   }
