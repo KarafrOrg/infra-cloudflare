@@ -162,7 +162,7 @@ access_policies = {
   allow-openstack-admins-to-talos = {
     app_key    = "openstack-dashboard"
     group_key  = "talos-admins"
-    precedence = 1
+    precedence = 2
     decision   = "allow"
   }
 }
