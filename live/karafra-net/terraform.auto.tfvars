@@ -3,7 +3,7 @@ cloudflare_account_id = "8a3ba4f6454120fd71c65e87612dd13c"
 domain      = "karafra.net"
 environment = "prod"
 
-gcp_push_tunnel_tokens       = true
+gcp_push_tunnel_tokens         = true
 gcp_tunnel_token_secret_prefix = "cloudflare-tunnel-token-"
 gcp_secret_labels = {
   managed_by = "terraform"
@@ -125,6 +125,15 @@ tunnels = {
 }
 
 access_groups = {
+  "openstack-admins" = {
+    github_teams = [
+      {
+        org  = "KarafrOrg"
+        team = "openstack-admins"
+      }
+    ]
+    emails = ["mtoth575@gmail.com"]
+  }
   "talos-admins" = {
     github_teams = [
       {
@@ -144,7 +153,13 @@ access_applications = {
 }
 
 access_policies = {
-  allow-developers-to-openstack-dashboard = {
+  allow-openstack-admins-to-openstack-dashboard = {
+    app_key    = "openstack-dashboard"
+    group_key  = "openstack-admins"
+    precedence = 1
+    decision   = "allow"
+  }
+  allow-openstack-admins-to-talos = {
     app_key    = "openstack-dashboard"
     group_key  = "talos-admins"
     precedence = 1
