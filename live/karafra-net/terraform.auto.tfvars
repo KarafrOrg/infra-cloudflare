@@ -128,14 +128,14 @@ tunnels = {
     service           = "http://10.200.0.1:80"
     secret            = "openstack-dashboard-tunnel"
     create_dns_record = false
-    cidr_routes       = ["10.200.0.1/32"]
+    cidr_routes       = []
   }
   openstack-api = {
     hostname          = "api.openstack.lan.karafra.net"
     service           = "http://10.200.0.1:5000"
     secret            = "openstack-api-tunnel"
     create_dns_record = false
-    cidr_routes       = ["10.200.0.1/32"]
+    cidr_routes       = []
   }
 }
 
