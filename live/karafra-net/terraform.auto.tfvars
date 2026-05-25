@@ -146,23 +146,7 @@ access_groups = {
 }
 
 access_applications = {
-  "openstack-dashboard" = {
-    domain           = "dashboard.openstack.lan.karafra.net"
-    session_duration = "24h"
-  }
 }
 
 access_policies = {
-  allow-openstack-admins-to-openstack-dashboard = {
-    app_key    = "openstack-dashboard"
-    group_key  = "openstack-admins"
-    precedence = 1
-    decision   = "allow"
-  }
-  allow-openstack-admins-to-talos = {
-    app_key    = "openstack-dashboard"
-    group_key  = "talos-admins"
-    precedence = 1
-    decision   = "allow"
-  }
 }
