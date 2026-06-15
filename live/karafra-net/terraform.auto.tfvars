@@ -86,6 +86,7 @@ tunnels = {
     secret            = "kubernetes-api-tunnel-token"
     create_dns_record = true
     cidr_routes       = []
+    no_tls_verify     = true
   }
 }
 

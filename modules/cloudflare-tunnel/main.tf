@@ -38,6 +38,9 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "tunnel_configs" {
       {
         hostname = each.value.hostname
         service  = each.value.service
+        origin_request = each.value.no_tls_verify ? {
+          no_tls_verify = true
+        } : null
       },
       {
         service = "http_status:404"

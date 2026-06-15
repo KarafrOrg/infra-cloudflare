@@ -103,6 +103,7 @@ variable "tunnels" {
     secret            = string
     create_dns_record = optional(bool, true)
     cidr_routes       = optional(list(string), [])
+    no_tls_verify     = optional(bool, false)
   }))
   default = {}
 }
