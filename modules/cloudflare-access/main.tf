@@ -39,7 +39,7 @@ resource "cloudflare_zero_trust_access_policy" "policies" {
   name       = "${each.key}-${var.name_suffix}"
   decision   = each.value.decision
 
-  include = [
+  include = each.value.include_everyone ? [{ everyone = {} }] : [
     {
       group = { id = cloudflare_zero_trust_access_group.groups[each.value.group_key].id }
     }

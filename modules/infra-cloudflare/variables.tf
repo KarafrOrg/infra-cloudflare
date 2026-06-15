@@ -131,10 +131,11 @@ variable "access_applications" {
 variable "access_policies" {
   description = "Map of access policy configurations."
   type = map(object({
-    app_key    = string
-    group_key  = string
-    precedence = number
-    decision   = string
+    app_key          = string
+    group_key        = optional(string)
+    include_everyone = optional(bool, false)
+    precedence       = number
+    decision         = string
   }))
   default = {}
 }

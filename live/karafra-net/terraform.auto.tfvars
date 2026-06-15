@@ -12,41 +12,6 @@ gcp_secret_labels = {
 }
 
 dns_records = {
-  "k8s-node1" = {
-    name    = "*"
-    type    = "A"
-    content = "135.125.223.211"
-    ttl     = 1
-    proxied = true
-  }
-  "k8s-node2" = {
-    name    = "*"
-    type    = "A"
-    content = "37.187.159.125"
-    ttl     = 1
-    proxied = true
-  }
-  "k8s-node3" = {
-    name    = "*"
-    type    = "A"
-    content = "135.125.223.213"
-    ttl     = 1
-    proxied = true
-  }
-  "k8s-node4" = {
-    name    = "*"
-    type    = "A"
-    content = "5.196.78.186"
-    ttl     = 1
-    proxied = true
-  }
-  "k8s-node5" = {
-    name    = "*"
-    type    = "A"
-    content = "37.187.157.64"
-    ttl     = 1
-    proxied = true
-  }
   "www" = {
     name    = "www"
     type    = "CNAME"
@@ -57,16 +22,8 @@ dns_records = {
 }
 
 edge_certificates = {
-  openstack-dashboard = {
-    hosts                 = ["dashboard.openstack.lan.karafra.net"]
-    type                  = "advanced"
-    validation_method     = "txt"
-    validity_days         = 90
-    certificate_authority = "lets_encrypt"
-    cloudflare_branding   = false
-  }
-  openstack-api = {
-    hosts                 = ["api.openstack.lan.karafra.net"]
+  kubernetes-api = {
+    hosts                 = ["kuberenetes.karafra.net"]
     type                  = "advanced"
     validation_method     = "txt"
     validity_days         = 90
@@ -123,65 +80,29 @@ waf_rate_limits = {
 waf_firewall_rules = {}
 
 tunnels = {
-  openstack-dashboard = {
-    hostname          = "dashboard.openstack.lan.karafra.net"
-    service           = "http://10.200.0.1:80"
-    secret            = "openstack-dashboard-tunnel"
-    create_dns_record = false
-    cidr_routes       = []
-  }
-  openstack-api = {
-    hostname          = "api.openstack.lan.karafra.net"
-    service           = "http://10.200.0.1:5000"
-    secret            = "openstack-api-tunnel"
-    create_dns_record = false
+  kubernetes-api = {
+    hostname          = "kubernetes.karafra.net"
+    service           = "https://10.200.0.10:6443"
+    secret            = "kubernetes-api-tunnel-token"
+    create_dns_record = true
     cidr_routes       = []
   }
 }
 
-access_groups = {
-  "openstack-admins" = {
-    github_teams = [
-      {
-        org  = "KarafrOrg"
-        team = "openstack-admins"
-      }
-    ]
-    emails = ["mtoth575@gmail.com"]
-  }
-  "talos-admins" = {
-    github_teams = [
-      {
-        org  = "KarafrOrg"
-        team = "talos-admins"
-      }
-    ]
-    emails = ["mtoth575@gmail.com"]
-  }
-}
+access_groups = {}
 
 access_applications = {
-  "openstack-dashboard" = {
-    domain           = "dashboard.openstack.lan.karafra.net"
-    session_duration = "24h"
-  }
-  "openstack-api" = {
-    domain           = "api.openstack.lan.karafra.net"
+  kubernetes-api = {
+    domain           = "kubernetes.karafra.net"
     session_duration = "24h"
   }
 }
 
 access_policies = {
-  allow-openstack-admins-to-openstack-dashboard = {
-    app_key    = "openstack-dashboard"
-    group_key  = "openstack-admins"
-    precedence = 1
-    decision   = "allow"
-  }
-  allow-openstack-admins-to-talos = {
-    app_key    = "openstack-dashboard"
-    group_key  = "talos-admins"
-    precedence = 2
-    decision   = "allow"
+  allow-everyone-to-kubernetes-api = {
+    app_key          = "kubernetes-api"
+    precedence       = 1
+    include_everyone = true
+    decision         = "bypass"
   }
 }
