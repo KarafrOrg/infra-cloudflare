@@ -88,12 +88,20 @@ waf_firewall_rules = {}
 
 tunnels = {
   kubernetes-oidc = {
-    hostname          = "oidc.k8s.karafra.net"
-    service           = "https://198.27.70.67:6443"
-    secret            = "kubernetes-oidc-tunnel-token"
-    create_dns_record = true
-    cidr_routes       = []
-    no_tls_verify     = true
+    hostname = "oidc.k8s.karafra.net"
+    secret   = "kubernetes-oidc-tunnel-token"
+    service  = "https://198.27.70.67:6443"
+
+    ingress = [
+      {
+        path           = "/.well-known/openid-configuration"
+        origin_request = { no_tls_verify = true }
+      },
+      {
+        path           = "/openid/v1/jwks"
+        origin_request = { no_tls_verify = true }
+      }
+    ]
   }
 }
 

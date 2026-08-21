@@ -30,29 +30,35 @@ resource "cloudflare_dns_record" "tunnel_records" {
 resource "cloudflare_zero_trust_tunnel_cloudflared_config" "tunnel_configs" {
   for_each = var.tunnels
 
-  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.tunnels[each.key].id
   account_id = var.account_id
+  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.tunnels[each.key].id
 
   config = {
     ingress = concat(
       [
-        for rule in each.value.ingress : {
-          hostname = each.value.hostname
-          path     = try(rule.path, null)
-          service  = rule.service
+        for rule in local.tunnel_ingress[each.key] : {
+        hostname = rule.hostname
+        path     = rule.path
+        service  = rule.service
 
-          origin_request = each.value.no_tls_verify ? {
-            no_tls_verify = true
-          } : null
-        }
+        origin_request = rule.origin_request
+      }
       ],
       [
         {
-          service = "http_status:404"
+          hostname = null
+          path     = null
+          service  = "http_status:404"
+
+          origin_request = null
         }
       ]
     )
   }
+
+  depends_on = [
+    cloudflare_zero_trust_tunnel_cloudflared.tunnels,
+  ]
 }
 
 resource "cloudflare_zero_trust_tunnel_cloudflared_route" "cidr_routes" {

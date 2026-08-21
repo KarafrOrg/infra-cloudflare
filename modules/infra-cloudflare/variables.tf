@@ -96,16 +96,26 @@ variable "waf_firewall_rules" {
 }
 
 variable "tunnels" {
-  description = "Map of tunnel configurations."
+  description = "Cloudflare Tunnel definitions."
+
   type = map(object({
-    service           = string
     hostname          = string
     secret            = string
+    service           = optional(string)
     create_dns_record = optional(bool, true)
     cidr_routes       = optional(list(string), [])
     no_tls_verify     = optional(bool, false)
+
+    ingress = optional(list(object({
+      hostname = optional(string)
+      path     = optional(string)
+      service  = optional(string)
+
+      origin_request = optional(object({
+        no_tls_verify = optional(bool)
+      }))
+    })), null)
   }))
-  default = {}
 }
 
 variable "access_groups" {
