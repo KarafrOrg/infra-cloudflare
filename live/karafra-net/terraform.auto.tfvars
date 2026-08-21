@@ -19,11 +19,18 @@ dns_records = {
     ttl     = 1
     proxied = true
   }
+  "kubernetes-api" = {
+    name    = "api"
+    type    = "CNAME"
+    content = "api.k8s.karafra.net"
+    ttl     = 1
+    proxied = true
+  }
 }
 
 edge_certificates = {
   kubernetes-api = {
-    hosts                 = ["kuberenetes.karafra.net"]
+    hosts                 = ["api.k8s.karafra.net"]
     type                  = "advanced"
     validation_method     = "txt"
     validity_days         = 90
@@ -79,31 +86,11 @@ waf_rate_limits = {
 
 waf_firewall_rules = {}
 
-tunnels = {
-  kubernetes-api = {
-    hostname          = "kubernetes.karafra.net"
-    service           = "https://10.200.0.10:6443"
-    secret            = "kubernetes-api-tunnel-token"
-    create_dns_record = true
-    cidr_routes       = []
-    no_tls_verify     = true
-  }
-}
+tunnels = {}
 
 access_groups = {}
 
 access_applications = {
-  kubernetes-api = {
-    domain           = "kubernetes.karafra.net"
-    session_duration = "24h"
-  }
 }
 
-access_policies = {
-  allow-everyone-to-kubernetes-api = {
-    app_key          = "kubernetes-api"
-    precedence       = 1
-    include_everyone = true
-    decision         = "bypass"
-  }
-}
+access_policies = {}
