@@ -37,4 +37,6 @@ resource "cloudflare_dns_record" "records" {
   content = each.value.content
   ttl     = try(each.value.ttl, 1)
   proxied = try(each.value.proxied, true)
+  tags    = ["terraform"]
+  comment = "Managed by Terraform"
 }
