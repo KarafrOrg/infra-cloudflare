@@ -24,7 +24,7 @@ dns_records = {
     type    = "A"
     content = "198.27.70.67"
     ttl     = 1
-    proxied = false
+    proxied = true
   }
 }
 
