@@ -94,16 +94,6 @@ tunnels = {
     create_dns_record = true
     cidr_routes       = []
     no_tls_verify     = true
-    ingress = [
-      {
-        path    = "^/\\.well-known/openid-configuration$"
-        service = "https://127.0.0.1:6443"
-      },
-      {
-        path    = "^/openid/v1/jwks$"
-        service = "https://127.0.0.1:6443"
-      }
-    ]
   }
 }
 
