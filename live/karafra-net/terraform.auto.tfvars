@@ -26,7 +26,7 @@ dns_records = {
     ttl     = 1
     proxied = false
   }
-  "kubernetes-api" = {
+  "kubernetes-oidc" = {
     name    = "oidc.k8s.karafra.net"
     type    = "A"
     content = "198.27.70.67"
