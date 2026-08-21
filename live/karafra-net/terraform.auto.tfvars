@@ -93,11 +93,29 @@ waf_rate_limits = {
 
 waf_firewall_rules = {}
 
-tunnels = {}
+tunnels = {
+  kubernetes-oidc = {
+    hostname          = "oidc.k8s.karafra.net"
+    service           = "https://127.0.0.1:6443"
+    secret            = "kubernetes-oidc-tunnel-token"
+    create_dns_record = true
+    cidr_routes       = []
+    no_tls_verify     = true
+    ingress = [
+      {
+        path    = "^/\\.well-known/openid-configuration$"
+        service = "https://127.0.0.1:6443"
+      },
+      {
+        path    = "^/openid/v1/jwks$"
+        service = "https://127.0.0.1:6443"
+      }
+    ]
+  }
+}
 
 access_groups = {}
 
-access_applications = {
-}
+access_applications = {}
 
 access_policies = {}

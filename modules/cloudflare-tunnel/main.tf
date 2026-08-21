@@ -34,18 +34,24 @@ resource "cloudflare_zero_trust_tunnel_cloudflared_config" "tunnel_configs" {
   account_id = var.account_id
 
   config = {
-    ingress = [
-      {
-        hostname = each.value.hostname
-        service  = each.value.service
-        origin_request = each.value.no_tls_verify ? {
-          no_tls_verify = true
-        } : null
-      },
-      {
-        service = "http_status:404"
-      }
-    ]
+    ingress = concat(
+      [
+        for rule in each.value.ingress : {
+          hostname = each.value.hostname
+          path     = try(rule.path, null)
+          service  = rule.service
+
+          origin_request = each.value.no_tls_verify ? {
+            no_tls_verify = true
+          } : null
+        }
+      ],
+      [
+        {
+          service = "http_status:404"
+        }
+      ]
+    )
   }
 }
 
