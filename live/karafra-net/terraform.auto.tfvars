@@ -20,12 +20,11 @@ dns_records = {
     proxied = true
   }
   "kubernetes-api" = {
-    name    = "api"
+    name    = "api.k8s.karafra.net"
     type    = "A"
-    content = "api.k8s.karafra.net"
+    content = "198.27.70.67"
     ttl     = 1
     proxied = true
-    content = "198.27.70.67"
   }
 }
 
