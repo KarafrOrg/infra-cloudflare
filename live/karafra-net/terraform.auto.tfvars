@@ -26,13 +26,6 @@ dns_records = {
     ttl     = 1
     proxied = false
   }
-  "kubernetes-oidc" = {
-    name    = "oidc.k8s.karafra.net"
-    type    = "A"
-    content = "198.27.70.67"
-    ttl     = 1
-    proxied = true
-  }
 }
 
 edge_certificates = {
