@@ -26,9 +26,25 @@ dns_records = {
     ttl     = 1
     proxied = false
   }
+  "kubernetes-api" = {
+    name    = "oidc.k8s.karafra.net"
+    type    = "A"
+    content = "198.27.70.67"
+    ttl     = 1
+    proxied = true
+  }
 }
 
-edge_certificates = {}
+edge_certificates = {
+  kubernetes-oidc = {
+    hosts                 = ["oidc.k8s.karafra.net"]
+    type                  = "advanced"
+    validation_method     = "txt"
+    validity_days         = 90
+    certificate_authority = "lets_encrypt"
+    cloudflare_branding   = false
+  }
+}
 
 waf_custom_rules = [
   {
