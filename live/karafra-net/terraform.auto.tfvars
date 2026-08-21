@@ -24,20 +24,11 @@ dns_records = {
     type    = "A"
     content = "198.27.70.67"
     ttl     = 1
-    proxied = true
+    proxied = false
   }
 }
 
-edge_certificates = {
-  kubernetes-api = {
-    hosts                 = ["api.k8s.karafra.net"]
-    type                  = "advanced"
-    validation_method     = "txt"
-    validity_days         = 90
-    certificate_authority = "lets_encrypt"
-    cloudflare_branding   = false
-  }
-}
+edge_certificates = {}
 
 waf_custom_rules = [
   {
