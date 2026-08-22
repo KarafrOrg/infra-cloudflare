@@ -22,7 +22,7 @@ dns_records = {
   "kubernetes-api" = {
     name    = "api.k8s.karafra.net"
     type    = "A"
-    content = "198.27.70.67"
+    content = "54.36.168.182"
     ttl     = 1
     proxied = false
   }
@@ -90,7 +90,7 @@ tunnels = {
   kubernetes-oidc = {
     hostname = "oidc.k8s.karafra.net"
     secret   = "kubernetes-oidc-tunnel-token"
-    service  = "https://198.27.70.67:6443"
+    service  = "https://54.36.168.182:6443"
 
     ingress = [
       {
