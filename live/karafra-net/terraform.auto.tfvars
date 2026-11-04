@@ -37,6 +37,14 @@ edge_certificates = {
     certificate_authority = "lets_encrypt"
     cloudflare_branding   = false
   }
+  kubernetes-general = {
+    hosts                 = ["*.kubernetes.karafra.net"]
+    type                  = "advanced"
+    validation_method     = "txt"
+    validity_days         = 90
+    certificate_authority = "lets_encrypt"
+    cloudflare_branding   = false
+  }
 }
 
 waf_custom_rules = [
