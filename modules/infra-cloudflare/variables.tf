@@ -121,7 +121,9 @@ variable "tunnels" {
 variable "access_groups" {
   description = "Map of access group configurations."
   type = map(object({
-    emails = optional(list(string), [])
+    emails   = optional(list(string), [])
+    warp     = optional(bool, false)
+    everyone = optional(bool, false)
     github_teams = optional(list(object({
       org  = string
       team = optional(string)
@@ -176,3 +178,18 @@ variable "gcp_secret_labels" {
   default     = {}
 }
 
+
+variable "warp_split_tunnel_exclude" {
+  type        = list(string)
+  description = "CIDRs excluded from the WARP default profile tunnel. When null the default profile is not managed. Anything not listed here is sent through WARP."
+  default     = null
+}
+
+variable "gateway_dns_overrides" {
+  type = map(object({
+    domains = list(string)
+    ips     = list(string)
+  }))
+  description = "Gateway DNS policies answering the given domains (and subdomains) with private IPs for WARP clients only."
+  default     = {}
+}

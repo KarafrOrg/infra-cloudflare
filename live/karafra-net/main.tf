@@ -17,6 +17,8 @@ module "infra-cloudflare" {
   access_groups                  = var.access_groups
   access_applications            = var.access_applications
   access_policies                = var.access_policies
+  warp_split_tunnel_exclude      = var.warp_split_tunnel_exclude
+  gateway_dns_overrides          = var.gateway_dns_overrides
   github_client_id               = var.github_client_id
   github_client_secret           = var.github_client_secret
 }

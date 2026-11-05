@@ -95,6 +95,13 @@ waf_rate_limits = {
 waf_firewall_rules = {}
 
 tunnels = {
+  private-network = {
+    hostname          = "private.karafra.net"
+    secret            = "private-network-tunnel-token"
+    create_dns_record = false
+    cidr_routes       = ["10.96.0.200/32"]
+    ingress           = []
+  }
   kubernetes-oidc = {
     hostname = "oidc.k8s.karafra.net"
     secret   = "kubernetes-oidc-tunnel-token"
@@ -111,10 +118,93 @@ tunnels = {
       }
     ]
   }
+  private-network = {
+    hostname          = "private.k8s.karafra.net"
+    secret            = "private-network-tunnel-token"
+    create_dns_record = false
+    ingress           = []
+    cidr_routes       = ["10.96.0.200/32"]
+  }
 }
 
-access_groups = {}
+# Default WARP exclude list with 10.96.0.200/32 (cluster private gateway) carved out of 10.0.0.0/8
+# so it is routed through WARP to the private-network tunnel.
+warp_split_tunnel_exclude = [
+  "10.0.0.0/10",
+  "10.64.0.0/11",
+  "10.96.0.0/25",
+  "10.96.0.128/26",
+  "10.96.0.192/29",
+  "10.96.0.201/32",
+  "10.96.0.202/31",
+  "10.96.0.204/30",
+  "10.96.0.208/28",
+  "10.96.0.224/27",
+  "10.96.1.0/24",
+  "10.96.2.0/23",
+  "10.96.4.0/22",
+  "10.96.8.0/21",
+  "10.96.16.0/20",
+  "10.96.32.0/19",
+  "10.96.64.0/18",
+  "10.96.128.0/17",
+  "10.97.0.0/16",
+  "10.98.0.0/15",
+  "10.100.0.0/14",
+  "10.104.0.0/13",
+  "10.112.0.0/12",
+  "10.128.0.0/9",
+  "100.64.0.0/10",
+  "169.254.0.0/16",
+  "172.16.0.0/12",
+  "192.0.0.0/24",
+  "192.168.0.0/16",
+  "224.0.0.0/24",
+  "240.0.0.0/4",
+  "255.255.255.255/32",
+  "fe80::/10",
+  "fd00::/8",
+  "ff01::/16",
+  "ff02::/16",
+  "ff03::/16",
+  "ff04::/16",
+  "ff05::/16",
+]
 
-access_applications = {}
+# Public DNS for these hosts points at 127.0.0.1 (instant connection refused); WARP clients get the real private IP.
+gateway_dns_overrides = {
+  private-ingress = {
+    domains = ["argocd.kubernetes.karafra.net", "grafana.kubernetes.karafra.net"]
+    ips     = ["10.96.0.200"]
+  }
+}
 
-access_policies = {}
+access_groups = {
+  internal = { warp = true }
+  public   = { everyone = true }
+}
+
+access_applications = {
+  internal-kubernetes = {
+    domain           = "*.kubernetes.karafra.net"
+    session_duration = "24h"
+  }
+  public-kubernetes-oidc = {
+    domain = "oidc.k8s.karafra.net"
+  }
+}
+
+access_policies = {
+  internal-kubernetes = {
+    app_key    = "internal-kubernetes"
+    group_key  = "internal"
+    precedence = 1
+    decision   = "allow"
+  }
+  public-kubernetes-oidc = {
+    app_key    = "public-kubernetes-oidc"
+    group_key  = "public"
+    precedence = 1
+    decision   = "bypass"
+  }
+}

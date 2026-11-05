@@ -8,6 +8,15 @@ resource "cloudflare_zero_trust_access_identity_provider" "github" {
   }
 }
 
+resource "cloudflare_zero_trust_device_posture_rule" "warp" {
+  count = anytrue([for g in var.access_groups : g.warp]) ? 1 : 0
+
+  account_id  = var.account_id
+  name        = "warp-connected-${var.name_suffix}"
+  type        = "warp"
+  description = "Device is connected through the WARP client"
+}
+
 resource "cloudflare_zero_trust_access_group" "groups" {
   for_each = var.access_groups
 
@@ -20,6 +29,10 @@ resource "cloudflare_zero_trust_access_group" "groups" {
         email = { email = email }
       }
     ],
+    each.value.warp ? [{
+      device_posture = { integration_uid = cloudflare_zero_trust_device_posture_rule.warp[0].id }
+    }] : [],
+    each.value.everyone ? [{ everyone = {} }] : [],
     [
       for gh in each.value.github_teams : {
         github_organization = {
@@ -63,4 +76,28 @@ resource "cloudflare_zero_trust_access_application" "apps" {
     }
     if policy.app_key == each.key
   ]
+}
+
+resource "cloudflare_zero_trust_device_default_profile" "warp" {
+  count = var.warp_split_tunnel_exclude == null ? 0 : 1
+
+  account_id = var.account_id
+  exclude    = [for cidr in var.warp_split_tunnel_exclude : { address = cidr }]
+}
+
+resource "cloudflare_zero_trust_gateway_policy" "dns_overrides" {
+  for_each = var.gateway_dns_overrides
+
+  account_id  = var.account_id
+  name        = "${each.key}-${var.name_suffix}"
+  description = "Resolve ${join(", ", each.value.domains)} to private IPs for WARP clients"
+  enabled     = true
+  action      = "override"
+  filters     = ["dns"]
+  precedence  = 1000 + index(sort(keys(var.gateway_dns_overrides)), each.key)
+  traffic     = join(" or ", [for d in each.value.domains : "any(dns.domains[*] == \"${d}\")"])
+
+  rule_settings = {
+    override_ips = each.value.ips
+  }
 }
