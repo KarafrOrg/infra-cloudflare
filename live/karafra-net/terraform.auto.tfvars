@@ -50,7 +50,7 @@ edge_certificates = {
 waf_custom_rules = [
   {
     description = "Block known bots"
-    expression  = "(cf.client.bot and not (http.host eq \"argocd-webhook.karafra.net\" and starts_with(http.request.uri.path, \"/api/webhook\")))"
+    expression  = "(cf.client.bot and not (http.host eq \"argocd-webhook.karafra.net\")))"
     action      = "block"
     enabled     = true
   },
